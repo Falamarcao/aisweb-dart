@@ -7,7 +7,3 @@ class AISWEBException implements Exception {
     return "AISWEBException: $message";
   }
 }
-
-//throwResponseCodeException() {
-//  throw AISWEBException('Response code is not 200');
-//}

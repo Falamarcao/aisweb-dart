@@ -1,3 +1,5 @@
+library aisweb.src;
+
 import 'package:meta/meta.dart' show required;
 
 import 'package:http/http.dart' as http;
@@ -21,7 +23,7 @@ class AISWEB {
 
   Future<Map<String, dynamic>> get(String query) async {
     final xml2json = Xml2Json();
-    final Response response = await http.get(baseUrl + query);
+    final Response response = await http.get('$baseUrl&$query');
 
     if (response.statusCode == 200) {
       xml2json.parse(response.body);
