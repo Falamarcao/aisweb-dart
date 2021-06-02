@@ -4,14 +4,13 @@ import 'package:meta/meta.dart' show required;
 
 import 'aisweb.dart';
 import 'models.dart';
-import 'utils.dart';
 
 class Rotaer extends AISWEB {
   Rotaer({@required String apiKey, @required String apiPass})
       : super(apiKey: apiKey, apiPass: apiPass, area: 'rotaer');
 
-  Future<RotaerData> getAerodromeData(String icaoCode) async =>
-      RotaerData.fromMap(await get('icaoCode=$icaoCode'));
+  Future<RotaerData> getAerodrome(String icaoCode) async =>
+      RotaerData.fromMap(await get({'icaoCode': icaoCode}));
 
   Future<List<RotaerData>> getAerodromesList({
     int rowStart = 0,
@@ -21,15 +20,15 @@ class Rotaer extends AISWEB {
     String uf,
     AerodromesTypes type,
   }) async {
-    final Map<String, dynamic> params = {
-      'rowStart': rowStart,
-      'rowEnd': rowEnd,
+    final Map<String, dynamic> queryParameters = {
+      'rowStart': rowStart.toString(),
+      'rowEnd': rowEnd.toString(),
       'name': name,
       'city': city,
       'uf': uf,
     };
 
-    Map<String, dynamic> data = await get(Utils.buildQuery(params));
+    Map<String, dynamic> data = await get(queryParameters);
     data = data['rotaer'];
 
     if (data != null) {

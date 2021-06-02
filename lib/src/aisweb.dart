@@ -13,17 +13,26 @@ import 'exceptions.dart' show AISWEBException;
 class AISWEB {
   final String apiKey;
   final String apiPass;
-  final String baseUrl;
+  final Uri uri;
   final String area;
 
-  const AISWEB(
-      {@required this.apiKey, @required this.apiPass, @required this.area})
-      : baseUrl =
-            'http://aisweb.decea.gov.br/api/?apiKey=$apiKey&apiPass=$apiPass&area=$area';
+  AISWEB({@required this.apiKey, @required this.apiPass, @required this.area})
+      : uri = Uri(
+            scheme: 'http',
+            host: 'aisweb.decea.gov.br',
+            path: '/api/',
+            queryParameters: {
+              'apiKey': apiKey,
+              'apiPass': apiPass,
+              'area': area
+            });
 
-  Future<Map<String, dynamic>> get(String query) async {
+  Future<Map<String, dynamic>> get(Map<String, dynamic> queryParameters) async {
     final xml2json = Xml2Json();
-    final Response response = await http.get('$baseUrl&$query');
+    queryParameters.addAll(uri.queryParameters);
+
+    final Response response =
+        await http.get(uri.replace(queryParameters: queryParameters));
 
     if (response.statusCode == 200) {
       xml2json.parse(response.body);

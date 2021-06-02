@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Test" type="DartTestRunConfigurationType" factoryName="Dart Test">
+    <option name="filePath" value="$PROJECT_DIR$/test/aisweb_test.dart" />
+    <option name="testRunnerOptions" value="--chain-stack-traces" />
+    <method v="2" />
+  </configuration>
+</component>

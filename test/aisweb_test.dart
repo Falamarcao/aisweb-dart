@@ -1,13 +1,44 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
+
+import 'private.dart';
 
 import 'package:aisweb/aisweb.dart';
 
 void main() {
-//  test('adds one to input values', () {
-//    final calculator = Calculator();
-//    expect(calculator.addOne(2), 3);
-//    expect(calculator.addOne(-7), -6);
-//    expect(calculator.addOne(0), 1);
-//    expect(() => calculator.addOne(null), throwsNoSuchMethodError);
-//  });
+  group('Rotaer', () {
+    Rotaer rotaer = Rotaer(apiKey: apiKey, apiPass: apiPass);
+
+    test('rotaer (aerodrome data)', () async {
+      RotaerData aiswebResponse = await rotaer.getAerodrome('SNZR');
+
+      expect(
+          aiswebResponse.toString(),
+          {
+            'aeroCode': 'SNZR',
+            'name': 'Pedro Rabelo de Souza',
+            'city': 'Paracatu',
+            'uf': 'MG',
+            'lat': -17.243055555556,
+            'lng': -46.881388888889
+          }.toString());
+      print(aiswebResponse);
+    });
+
+    test('rotaer (aerodromes list)', () async {
+      List<RotaerData> aiswebResponse = await rotaer.getAerodromesList(
+          city: 'Paracatu', uf: 'MG', type: AerodromesTypes.AD);
+
+      expect(
+          aiswebResponse.first.toString(),
+          {
+            'aeroCode': 'SNZR',
+            'name': 'Pedro Rabelo de Souza',
+            'city': 'Paracatu',
+            'uf': 'MG',
+            'lat': -17.243055555556,
+            'lng': -46.881388888889
+          }.toString());
+      print(aiswebResponse.first);
+    });
+  });
 }
